@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [allCurrencies, setAllCurrencies] = useState([]);
+  // const [fromCurrency, setFromCurrency] = useState();
+  // const [toCurrency, setToCurrency] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json"
+        );
+        if (!response.ok) {
+          throw new Error("HTTP Error: ${response.status}");
+        }
+        let data = await response.json();
+        setAllCurrencies(data);
+      } catch (err) {
+        console.log(err);
+        setAllCurrencies(null);
+      }
+    };
+    fetchData();
+  }, [allCurrencies]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <h1>Currency Converter</h1>
+      <h3>Input the amount to be converted</h3>
+      <div className="initial-currency">
+        <select>
+          {allCurrencies.map((currency) => {
+            <option key={currency} value={currency}>
+              {currency}
+            </option>;
+          })}
+          <option value="AUD">AUD</option>
+          <option value="USD">USD</option>
+        </select>
+        <input placeholder="Input amount"></input>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <button className="convert-btn">Convert</button>
+      <div className="converted-currency">
+        <select>
+          <option value="AUD">AUD</option>
+          <option value="USD">USD</option>
+        </select>
+        <input placeholder="Output amount"></input>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
