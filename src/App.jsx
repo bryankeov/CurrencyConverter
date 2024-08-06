@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [allCurrencies, setAllCurrencies] = useState([]);
-  // const [fromCurrency, setFromCurrency] = useState();
+  const [currData, setCurrData] = useState();
   // const [toCurrency, setToCurrency] = useState();
 
   useEffect(() => {
@@ -22,14 +22,32 @@ function App() {
       }
     };
     fetchData();
-  }, [allCurrencies]);
+  }, []);
+
+  function getCurr(value) {
+    if (value === "Select" || value === "undefined") {
+      null;
+    } else {
+      fetch(
+        `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${value}.json`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setCurrData(Object.values(data));
+        });
+    }
+    console.log(currData);
+  }
 
   return (
     <div>
       <h1>Currency Converter</h1>
       <h3>Input the amount to be converted</h3>
       <div className="input-currency">
-        <select>
+        <select onChange={(e) => getCurr(e.target.value)}>
+          <option hidden disabled selected value>
+            Select
+          </option>
           {Object.keys(allCurrencies).map((value, key) => {
             return (
               <option key={`i + ${key}`} value={value}>
@@ -41,8 +59,11 @@ function App() {
         <input placeholder="Input amount"></input>
       </div>
       <button className="convert-btn">Convert</button>
-      <div className="output-currency">
-        <select>
+      <div className="output-currency" id="outputCurr">
+        <select onChange={(e) => setCurrData(e.target.value)}>
+          <option hidden disabled selected value>
+            Select
+          </option>
           {Object.keys(allCurrencies).map((value, key) => {
             return (
               <option key={`o + ${key}`} value={value}>
