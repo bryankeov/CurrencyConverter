@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 function App() {
   const [allCurrencies, setAllCurrencies] = useState([]);
   const [currData, setCurrData] = useState();
-  // const [toCurrency, setToCurrency] = useState();
+  const [exchangeRate, setExchangeRate] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,12 +33,18 @@ function App() {
       )
         .then((response) => response.json())
         .then((data) => {
-          setCurrData(Object.values(data));
+          setCurrData(data[value]);
         });
     }
-    console.log(currData);
   }
 
+  function compareCurr(value) {
+    Object.keys(currData).forEach((key) => {
+      if (key === value) {
+        setExchangeRate(currData[value]);
+      }
+    });
+  }
   return (
     <div>
       <h1>Currency Converter</h1>
@@ -59,8 +65,9 @@ function App() {
         <input placeholder="Input amount"></input>
       </div>
       <button className="convert-btn">Convert</button>
+      <div>{exchangeRate}</div>
       <div className="output-currency" id="outputCurr">
-        <select onChange={(e) => setCurrData(e.target.value)}>
+        <select onChange={(e) => compareCurr(e.target.value)}>
           <option hidden disabled selected value>
             Select
           </option>
