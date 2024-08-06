@@ -18,7 +18,6 @@ function App() {
         let data = await response.json();
         setAllCurrencies(data);
       } catch (err) {
-        console.log(err);
         setAllCurrencies(null);
       }
     };
@@ -29,23 +28,28 @@ function App() {
     <div>
       <h1>Currency Converter</h1>
       <h3>Input the amount to be converted</h3>
-      <div className="initial-currency">
+      <div className="input-currency">
         <select>
-          {allCurrencies.map((currency) => {
-            <option key={currency} value={currency}>
-              {currency}
-            </option>;
+          {Object.keys(allCurrencies).map((value, key) => {
+            return (
+              <option key={`i + ${key}`} value={value}>
+                {value.toUpperCase()}
+              </option>
+            );
           })}
-          <option value="AUD">AUD</option>
-          <option value="USD">USD</option>
         </select>
         <input placeholder="Input amount"></input>
       </div>
       <button className="convert-btn">Convert</button>
-      <div className="converted-currency">
+      <div className="output-currency">
         <select>
-          <option value="AUD">AUD</option>
-          <option value="USD">USD</option>
+          {Object.keys(allCurrencies).map((value, key) => {
+            return (
+              <option key={`o + ${key}`} value={value}>
+                {value.toUpperCase()}
+              </option>
+            );
+          })}
         </select>
         <input placeholder="Output amount"></input>
       </div>
