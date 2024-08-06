@@ -66,3 +66,32 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.numeric-values {
+  width: 100px;
+  height: 20px;
+  margin: 5px;
+  padding: 2px;
+  border: 2px white solid;
+  text-align: center;
+  font-size: small;
+  border-radius: 5px;
+
+}
+
+.drop-down {
+  width: 100px;
+  height: 25px;
+  margin: 5px;
+  border: 2px white solid;
+  border-radius: 5px;
+}
+
+.input-currency, .output-currency, .xr-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+}

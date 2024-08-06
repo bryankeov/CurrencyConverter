@@ -5,6 +5,7 @@ function App() {
   const [allCurrencies, setAllCurrencies] = useState([]);
   const [currData, setCurrData] = useState();
   const [exchangeRate, setExchangeRate] = useState(0);
+  const [outputCurr, setOutputCurr] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,13 +46,24 @@ function App() {
       }
     });
   }
+
+  function calcCurr(value) {
+    let output = value * exchangeRate;
+    setOutputCurr(output.toFixed(2));
+  }
+
   return (
     <div>
       <h1>Currency Converter</h1>
       <h3>Input the amount to be converted</h3>
       <div className="input-currency">
-        <select onChange={(e) => getCurr(e.target.value)}>
-          <option hidden disabled selected value>
+        <input
+          className="numeric-values"
+          placeholder="Input amount"
+          onChange={(e) => calcCurr(e.target.value)}
+        ></input>
+        <select className="drop-down" onChange={(e) => getCurr(e.target.value)}>
+          <option hidden selected disabled>
             Select
           </option>
           {Object.keys(allCurrencies).map((value, key) => {
@@ -62,13 +74,16 @@ function App() {
             );
           })}
         </select>
-        <input placeholder="Input amount"></input>
       </div>
-      <button className="convert-btn">Convert</button>
-      <div>{exchangeRate}</div>
-      <div className="output-currency" id="outputCurr">
-        <select onChange={(e) => compareCurr(e.target.value)}>
-          <option hidden disabled selected value>
+      <div className="output-currency">
+        <div type="text" className="numeric-values">
+          {outputCurr}
+        </div>
+        <select
+          className="drop-down"
+          onChange={(e) => compareCurr(e.target.value)}
+        >
+          <option hidden selected disabled>
             Select
           </option>
           {Object.keys(allCurrencies).map((value, key) => {
@@ -79,7 +94,10 @@ function App() {
             );
           })}
         </select>
-        <input placeholder="Output amount"></input>
+      </div>
+      <div className="xr-container">
+        <h4>Exchange Rate</h4>
+        <div className="numeric-values">{exchangeRate}</div>
       </div>
     </div>
   );
