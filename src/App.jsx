@@ -42,7 +42,7 @@ function App() {
   function compareCurr(value) {
     Object.keys(currData).forEach((key) => {
       if (key === value) {
-        setExchangeRate(currData[value]);
+        setExchangeRate(currData[value].toFixed(4));
       }
     });
   }

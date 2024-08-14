@@ -76,7 +76,7 @@ button:focus-visible {
   text-align: center;
   font-size: small;
   border-radius: 5px;
-
+  background-color: whitesmoke;
 }
 
 .drop-down {
@@ -85,6 +85,7 @@ button:focus-visible {
   margin: 5px;
   border: 2px white solid;
   border-radius: 5px;
+  background-color: whitesmoke;
 }
 
 .input-currency, .output-currency, .xr-container {
