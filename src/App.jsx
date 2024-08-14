@@ -96,7 +96,7 @@ function App() {
         </select>
       </div>
       <div className="xr-container">
-        <h4>Exchange Rate</h4>
+        <h5>Exchange Rate:</h5>
         <div className="numeric-values">{exchangeRate}</div>
       </div>
     </div>
